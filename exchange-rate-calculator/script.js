@@ -7,20 +7,18 @@ const amountTwo = document.getElementById('amountTwo')
 const rate = document.getElementById('rate')
 const swapButton = document.getElementById('swap')
 
-const calculate = () => {
+const calculate = async () => {
     const currencyOneVal = currencyOne.value
     const amountOneVal = amountOne.value
 
     const currencyTwoVal = currencyTwo.value
     
-    fetch(`https://api.exchangerate-api.com/v4/latest/${currencyOneVal}`)
-        .then(response => response.json())
-        .then(data => {
-            const rateVal = data.rates[currencyTwoVal]
-            rate.innerText = `1 ${currencyOneVal} = ${rateVal} ${currencyTwoVal}`
-            amountTwo.value = (amountOneVal * rateVal).toFixed(2)
-        })
-
+    const apiResponse = await fetch(`https://api.exchangerate-api.com/v4/latest/${currencyOneVal}`)
+    const data = await apiResponse.json()
+    
+    const rateVal = data.rates[currencyTwoVal]
+    rate.innerText = `1 ${currencyOneVal} = ${rateVal} ${currencyTwoVal}`
+    amountTwo.value = (amountOneVal * rateVal).toFixed(2)
 }
 
 currencyOne.addEventListener('change', calculate)
