@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Open+Sans:wght@300&family=Questrial&display=swap');
 
 :root {
-    --modal-duration: 1s;
+    --modal-duration: 0.5s;
     --primary-color: #30336b;
     --secondary-color: #be2edd;
+    --nav-width: 200px;
 }
 
 * {
@@ -13,6 +14,11 @@
 body {
     font-family: 'Lato', sans-serif;
     margin: 0;
+    transition: transform 0.3s ease;
+}
+
+body.show-nav {
+    transform: translateX(var(--nav-width));
 }
 
 nav {
@@ -20,7 +26,7 @@ nav {
     border-right: 2px solid rgba(200, 200, 200, 0.1);
     color: #fff;
     position: fixed;
-    width: 200px;
+    width: var(--nav-width);
     height: 100vh;
     z-index: 100;
     transform: translateX(-100%);
@@ -120,6 +126,10 @@ button:focus {
     bottom: 0;
 }
 
+.modal-container.showmodal {
+    display: block;
+}
+
 .modal {
     background-color: #fff;
     border-radius: 5px;
@@ -131,6 +141,8 @@ button:focus {
     transform: translate(-50%, -50%);
     max-width: 100%;
     width: 400px;
+    animation-name: modal-open;
+    animation-duration: var(--modal-duration);
 }
 
 .modal-header {
@@ -168,4 +180,13 @@ button:focus {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+@keyframes modal-open {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
