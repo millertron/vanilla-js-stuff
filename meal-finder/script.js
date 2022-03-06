@@ -64,6 +64,17 @@ const addMealToDOM = (meal) => {
     `
 }
 
+const getRandomMeal = () => {
+    mealsEl.innerHTML = ''
+    resultHeading.innerHTML = ''
+
+    fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
+        .then(res => res.json())
+        .then(data => {
+            addMealToDOM(data.meals[0])
+        })
+}
+
 const getMealById = id => {
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then(res => res.json())
@@ -74,6 +85,7 @@ const getMealById = id => {
 }
 
 submit.addEventListener('submit', searchMeal)
+random.addEventListener('click', getRandomMeal)
 
 mealsEl.addEventListener('click', e => {
     const mealInfo = e.path.find(item => item.classList ? item.classList.contains('meal-info') : false)
