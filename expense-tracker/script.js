@@ -6,11 +6,32 @@ const form = document.getElementById('form')
 const text = document.getElementById('text')
 const amount = document.getElementById('amount')
 
-const transactionData = [
-    { id: 1, text: 'Flower', amount: -20 },
-    { id: 2, text: 'Salary', amount: 300 },
-    { id: 3, text: 'Book', amount: -10}
-]
+const localStorageTransactions = localStorage.getItem('transactions')
+
+let transactionData = localStorageTransactions ? JSON.parse(localStorageTransactions) : []
+
+const updateLocalStorage = () => {
+    localStorage.setItem('transactions', JSON.stringify(transactionData))
+}
+
+const addTransaction = (e) => {
+    e.preventDefault()
+
+    if (text.value.trim() !== '' && amount.value.trim() !== '') {
+        const transaction = {
+            id: transactionData.length + 1,
+            text: text.value,
+            amount: +amount.value
+        }
+
+        transactionData.push(transaction)
+        addTransactionDOM(transaction)
+        updateValues()
+        updateLocalStorage()
+        text.value = ''
+        amount.value = ''
+    }
+}
 
 const addTransactionDOM = (transaction) => {
     const transactionAmount = transaction.amount
@@ -19,9 +40,15 @@ const addTransactionDOM = (transaction) => {
     item.classList.add(transactionAmount >= 0 ? 'plus' : 'minus')
     item.innerHTML = `
         ${transaction.text} <span>${transactionAmount}</span>
-        <button class="delete-btn">x</button>
+        <button class="delete-btn" onclick="removeTransaction(${transaction.id})">x</button>
     `
     list.appendChild(item)
+}
+
+const removeTransaction = (id) => {
+    transactionData = transactionData.filter(transaction => id !== transaction.id)
+    updateLocalStorage()
+    init()
 }
 
 const sumAndFormat = (amounts) => {
@@ -46,5 +73,6 @@ const init = () => {
     updateValues()
 }
 
+form.addEventListener('submit', addTransaction)
 
 init()
