@@ -24,9 +24,27 @@ const addTransactionDOM = (transaction) => {
     list.appendChild(item)
 }
 
+const sumAndFormat = (amounts) => {
+    return amounts.reduce((acc, item) => (acc += item), 0).toFixed(2)
+}
+
+const updateValues = () => {
+    const amounts = transactionData.map(transaction => transaction.amount)
+    const total = sumAndFormat(amounts)
+
+    const income = sumAndFormat(amounts.filter(item => item > 0))    
+    const expense = sumAndFormat(amounts.filter(item => item < 0))
+    
+    balance.innerText = `$${total}`
+    moneyPlus.innerText = `$${income}`
+    moneyMinus.innerText = `$${expense}`
+}
+
 const init = () => {
     list.innerHTML = ''
     transactionData.forEach(addTransactionDOM)
+    updateValues()
 }
+
 
 init()
