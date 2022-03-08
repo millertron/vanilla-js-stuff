@@ -33,12 +33,36 @@ const playSong = () => {
     icon.classList.add('fa-pause')
     audio.play()
 }
+
 const prevSong = () => {
+    songIndex--
+    if (songIndex < 0) {
+        songIndex = songs.length -1
+    }
+    loadSong(songs[songIndex])
+}
+
+const nextSong = () => {
+    songIndex++
+    if (songIndex > songs.length - 1) {
+        songIndex = 0
+    }
+    loadSong(songs[songIndex])
+}
+
+const updateProgress = (e) => {
+    const { duration, currentTime } = e.srcElement
+    const progressPercent = (currentTime / duration) * 100
+    progress.style.width = `${progressPercent}%`
 }
 
 playBtn.addEventListener('click', () => {
     const isPlaying = musicContainer.classList.contains('play')
     isPlaying ? pauseSong() : playSong()
 })
+
+prevBtn.addEventListener('click', prevSong)
+nextBtn.addEventListener('click', nextSong)
+audio.addEventListener('timeupdate', updateProgress)
 
 loadSong(songs[songIndex])
