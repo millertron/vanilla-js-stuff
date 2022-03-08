@@ -24,12 +24,16 @@ const pauseSong = () => {
     musicContainer.classList.remove('play')
     icon.classList.remove('fa-pause')
     icon.classList.add('fa-play')
+    audio.pause()
 }
 
 const playSong = () => {
     musicContainer.classList.add('play')
     icon.classList.remove('fa-play')
     icon.classList.add('fa-pause')
+    audio.play()
+}
+const prevSong = () => {
 }
 
 playBtn.addEventListener('click', () => {
