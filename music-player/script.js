@@ -40,6 +40,7 @@ const prevSong = () => {
         songIndex = songs.length -1
     }
     loadSong(songs[songIndex])
+    playSong()
 }
 
 const nextSong = () => {
@@ -48,6 +49,7 @@ const nextSong = () => {
         songIndex = 0
     }
     loadSong(songs[songIndex])
+    playSong()
 }
 
 const updateProgress = (e) => {
