@@ -29,12 +29,33 @@ const showPosts = async () => {
         postsContainer.appendChild(postEl)
     })
     page++
+    filterPosts()
     loading.classList.remove('show')
 }
 
 const showLoading = () => {
     loading.classList.add('show')
 
+}
+
+const filterPosts = () => {
+    const term = filter.value.toUpperCase()
+    const posts = document.querySelectorAll('.post')
+
+    if (term.length > 2) {
+        posts.forEach(post => {
+            const title = post.querySelector('.post-title').innerText.toUpperCase()
+            const body = post.querySelector('.post-body').innerText.toUpperCase()
+
+            if (title.indexOf(term) > -1 || body.indexOf(term) > -1){
+                post.style.display = 'flex'
+            } else {
+                post.style.display = 'none'
+            }
+        })
+    } else {
+        posts.forEach(post => post.style.display = 'flex')
+    }
 }
 
 window.addEventListener('scroll', () => {
@@ -47,3 +68,4 @@ window.addEventListener('scroll', () => {
 })
 
 showPosts()
+filter.addEventListener('input', filterPosts)
