@@ -24,6 +24,21 @@ let scoreValue = 0
 let timeLeft = 10
 let timeBonus = 2
 let scoreBonus = 2
+let currentDifficulty = localStorage.getItem('difficulty') || 2
+
+const configure = () => {
+    switch (+currentDifficulty) {
+        case 1:
+            timeBonus = 5, scoreBonus = 1
+            break;
+        case 2:
+            timeBonus = 3, scoreBonus = 2
+            break;
+        case 3:
+            timeBonus = 1, scoreBonus = 5
+            break;
+    }
+}
 
 const getRandomWord = () => {
     return wordList[Math.floor(Math.random() * wordList.length)]
@@ -67,7 +82,14 @@ text.addEventListener('input', e => {
     }
 })
 
+settingsButton.addEventListener('click', () => settings.classList.toggle('hide'))
+settingsForm.addEventListener('change', () => {
+    localStorage.setItem('difficulty', difficulty.value)
+    location.reload()
+})
+
+difficulty.value = currentDifficulty
+configure()
 addWordToDOM()
 text.focus()
-
 const timeInterval = setInterval(updateTime, 1000)
