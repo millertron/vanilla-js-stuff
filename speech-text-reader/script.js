@@ -94,7 +94,10 @@ const setVoice = () => {
     message.voice = voices.find(voice => voice.name === voiceSelect.value)
 }
 
-toggleButton.addEventListener('click', () => textBox.classList.toggle('show'))
+toggleButton.addEventListener('click', () => {
+    textBox.classList.toggle('show')
+    textBox.classList.remove('hidden')
+})
 closeButton.addEventListener('click', () => textBox.classList.remove('show'))
 voiceSelect.addEventListener('change', setVoice)
 readButton.addEventListener('click', () => {

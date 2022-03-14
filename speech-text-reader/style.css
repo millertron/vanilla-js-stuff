@@ -44,6 +44,10 @@ h1 {
     margin-bottom: 20px;
 }
 
+.hidden {
+    visibility: hidden;
+}
+
 .text-box {
     width: 70%;
     position: absolute;
@@ -54,7 +58,7 @@ h1 {
     color: #fff;
     padding: 20px;
     border-radius: 5px;
-    transition: all 0.3s ease-in;
+    transition: transform 0.3s ease-in;
 }
 
 .text-box.show {
