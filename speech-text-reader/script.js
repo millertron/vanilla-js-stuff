@@ -90,8 +90,17 @@ const createBox = (item) => {
     main.appendChild(box)
 }
 
+const setVoice = () => {
+    message.voice = voices.find(voice => voice.name === voiceSelect.value)
+}
+
 toggleButton.addEventListener('click', () => textBox.classList.toggle('show'))
 closeButton.addEventListener('click', () => textBox.classList.remove('show'))
+voiceSelect.addEventListener('change', setVoice)
+readButton.addEventListener('click', () => {
+    setTextMessage(textArea.value)
+    speakText()
+})
 
 speechSynthesis.addEventListener('voiceschanged', getVoices)
 
