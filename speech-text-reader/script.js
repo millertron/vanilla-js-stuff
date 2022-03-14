@@ -5,6 +5,7 @@ const readButton = document.getElementById('read')
 const toggleButton = document.getElementById('toggle')
 const closeButton = document.getElementById('close')
 const textBox = document.getElementById('textBox')
+const message = new SpeechSynthesisUtterance()
 
 const data = [
     {
@@ -69,6 +70,9 @@ const getVoices = () => {
     })
 }
 
+const setTextMessage = (text) => message.text = text
+const speakText = () => speechSynthesis.speak(message)
+
 const createBox = (item) => {
     const box = document.createElement('div')
     const { image, text } = item
@@ -77,6 +81,12 @@ const createBox = (item) => {
         <img src="${image}" alt="${text}" />
         <p class="info">${text}</p>
     `
+    box.addEventListener('click', () => {
+        setTextMessage(text)
+        speakText()
+        box.classList.add('active')
+        setTimeout(() => box.classList.remove('active'), 800)
+    })
     main.appendChild(box)
 }
 
