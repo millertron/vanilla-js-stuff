@@ -4,6 +4,7 @@ const textArea = document.getElementById('text')
 const readButton = document.getElementById('read')
 const toggleButton = document.getElementById('toggle')
 const closeButton = document.getElementById('close')
+const textBox = document.getElementById('textBox')
 
 const data = [
     {
@@ -56,6 +57,18 @@ const data = [
     }
 ]
 
+let voices = []
+
+const getVoices = () => {
+    voices = speechSynthesis.getVoices()
+    voices.forEach(voice => {
+        const option = document.createElement('option')
+        option.value = voice.name
+        option.innerText = `${voice.name} (${voice.lang})`
+        voiceSelect.appendChild(option)
+    })
+}
+
 const createBox = (item) => {
     const box = document.createElement('div')
     const { image, text } = item
@@ -67,4 +80,10 @@ const createBox = (item) => {
     main.appendChild(box)
 }
 
+toggleButton.addEventListener('click', () => textBox.classList.toggle('show'))
+closeButton.addEventListener('click', () => textBox.classList.remove('show'))
+
+speechSynthesis.addEventListener('voiceschanged', getVoices)
+
+getVoices()
 data.forEach(createBox)
