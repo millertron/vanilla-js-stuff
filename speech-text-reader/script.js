@@ -47,11 +47,11 @@ const data = [
         text: "I want to go home"
     },
     {
-        image: './img/school',
+        image: './img/school.jpg',
         text: 'I want to go to school'
     },
     {
-        image: `./img/grandma`,
+        image: `./img/grandma.jpg`,
         text: "I want to go to grandma's"
     }
 ]
