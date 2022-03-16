@@ -59,4 +59,23 @@ const createCard = (data, index) => {
 
 const createCards = () => cardsData.forEach((data, index) => createCard(data, index))
 
+nextButton.addEventListener('click', () => {
+    cards[currentActiveCard].className = 'card left'
+    currentActiveCard++
+    if (currentActiveCard > cards.length - 1) {
+        currentActiveCard = cards.length - 1
+    }
+    cards[currentActiveCard].className = 'card active'
+    updateCurrentText()
+})
+
+prevButton.addEventListener('click', () => {
+    cards[currentActiveCard].className = 'card right'
+    currentActiveCard--
+    if (currentActiveCard < 0) {
+        currentActiveCard = 0
+    }
+    cards[currentActiveCard].className = 'card active'
+    updateCurrentText()
+})
 createCards()
