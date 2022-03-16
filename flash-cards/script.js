@@ -14,23 +14,15 @@ let currentActiveCard = 0
 
 const cards = []
 
-const cardsData = [
-    {
-        question: 'What must a variable begin with?',
-        answer: 'A letter, $ or _'
-    },
-    {
-        question: 'What is a variable?',
-        answer: 'Container for a piece of data'
-    },
-    {
-        question: 'Example of Case Sensitive Variable',
-        answer: 'thisIsAvariable'
-    }
-]
+const getCardsData = () => {
+    const cardsInStorage = JSON.parse(localStorage.getItem('cards'))
+    return cardsInStorage || []
+}
+
+const cardsData = getCardsData()
 
 const updateCurrentText = () => {
-    currentEl.innerText = `${ currentActiveCard + 1 } / ${ cards.length }`
+    currentEl.innerText = cards.length > 0 ? `${ currentActiveCard + 1 } / ${ cards.length }` : ''
 }
 
 const createCard = (data, index) => {
@@ -78,4 +70,37 @@ prevButton.addEventListener('click', () => {
     cards[currentActiveCard].className = 'card active'
     updateCurrentText()
 })
+
+const updateCardsInStore = () => {
+    localStorage.setItem('cards', JSON.stringify(cardsData))
+}
+
+showButton.addEventListener('click', () => addContainer.classList.add('show'))
+hideButton.addEventListener('click', () => addContainer.classList.remove('show'))
+addCardButton.addEventListener('click', () => {
+    const question = questionEl.value;
+    const answer = answerEl.value;
+    if (question.trim() && answer.trim()) {
+        const cardData = {
+            question,
+            answer
+        }
+        createCard(cardData)
+        cardsData.push(cardData)
+        updateCardsInStore()
+        questionEl.value = ''
+        answerEl.value = ''
+        addContainer.classList.remove('show')
+        cards[currentActiveCard].className = 'card active'
+    }
+})
+clear.addEventListener('click', () => {
+    localStorage.clear()
+    cardsContainer.innerHTML = ''
+    cards.length = 0
+    cardsData.length = 0
+    currentActiveCard = 0
+    updateCurrentText()
+})
+
 createCards()
