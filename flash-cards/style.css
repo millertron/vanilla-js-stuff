@@ -70,7 +70,7 @@ h1 button {
     height: 100%;
     width: 100%;
     transform: translateX(50%) rotateY(-10deg);
-    transition: tranform 0.4s ease, opacity 0.4s ease;
+    transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
 .card.active {
@@ -95,7 +95,7 @@ h1 button {
     width: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: tranform 0.4s ease;
+    transition: transform 0.6s ease;
 }
 
 .inner-card-front, .inner-card-back {
