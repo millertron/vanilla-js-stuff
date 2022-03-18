@@ -115,10 +115,20 @@ const moveBall = () => {
     ball.x += ball.dx
     ball.y -= ball.dy
 
-    if (ball.x - ball.size < 0 || ball.x + ball.size > canvas.width) {
+    const ballLeft = ball.x - ball.size
+    const ballRight = ball.x + ball.size
+    const ballTop = ball.y - ball.size
+    const ballBottom = ball.y + ball.size
+
+    if (ballLeft < 0 || ballRight > canvas.width) {
         ball.dx *= -1
     }
-    if (ball.y - ball.size < 0 || ball.y + ball.size > canvas.height) {
+    if (ballTop < 0 || ballBottom > canvas.height) {
+        ball.dy *= -1
+    }
+
+    if (ballLeft > paddle.x && ballRight < paddle.x + paddle.width
+        && ballBottom > paddle.y) {
         ball.dy *= -1
     }
 }
