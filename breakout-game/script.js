@@ -8,6 +8,7 @@ const ctx = canvas.getContext('2d')
 const canvasItemColor = '#0095dd'
 
 let score = 0
+//using keybuffer as workaround for keydown issue
 let keyBuffer = 0
 
 const brickRowCount = 9
