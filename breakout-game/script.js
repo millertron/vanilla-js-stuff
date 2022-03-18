@@ -8,6 +8,7 @@ const ctx = canvas.getContext('2d')
 const canvasItemColor = '#0095dd'
 
 let score = 0
+let keyBuffer = 0
 
 const brickRowCount = 9
 const brickColCount = 5
@@ -84,13 +85,51 @@ const drawBricks = () => {
 }
 
 const draw = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     drawBall()
-    drawBricks()
     drawPaddle()
+    drawBricks()
     drawScore()
 }
+
+const movePaddle = () => {
+    keyBuffer--
+    
+    if (keyBuffer < 0) {
+        paddle.dx = 0
+        keyBuffer = 0
+    }
+
+    paddle.x += paddle.dx
+
+    if (paddle.x + paddle.width > canvas.width) {
+        paddle.x = canvas.width - paddle.width
+    }
+    if (paddle.x < 0) {
+        paddle.x = 0
+    }
+}
+
+const update = () =>{
+    movePaddle()
+    draw()
+    requestAnimationFrame(update)
+}
+
+const keyDown = (e) => {
+    const keyPressed = e.key
+    if (['Right', 'ArrowRight', 'a'].includes(keyPressed)) {
+        paddle.dx = paddle.speed
+        keyBuffer = 5
+    } else if (['Left', 'ArrowLeft', 'd'].includes(keyPressed)) {
+        paddle.dx = -paddle.speed
+        keyBuffer = 5
+    }
+}
+
+document.addEventListener('keydown', keyDown)
 
 rulesButton.addEventListener('click', () => rules.classList.add('show'))
 closeButton.addEventListener('click', () => rules.classList.remove('show'))
 
-draw()
+update()
