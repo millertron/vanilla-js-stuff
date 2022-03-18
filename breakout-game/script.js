@@ -111,6 +111,20 @@ const movePaddle = () => {
     }
 }
 
+const brickCollision = (brick) => {
+    const ballLeft = ball.x - ball.size
+    const ballRight = ball.x + ball.size
+    const ballTop = ball.y - ball.size
+    const ballBottom = ball.y + ball.size
+
+    if (brick.alive
+        && ballLeft > brick.x && ballRight < brick.x + brick.width
+        && ballBottom > brick.y && ballTop < brick.y + brick.height) {
+        ball.dy *= -1
+        brick.alive = false
+    }
+}
+
 const moveBall = () => {
     ball.x += ball.dx
     ball.y -= ball.dy
@@ -131,6 +145,10 @@ const moveBall = () => {
         && ballBottom > paddle.y) {
         ball.dy *= -1
     }
+
+    bricks.forEach(column => {
+        column.forEach(brickCollision)
+    })
 }
 
 const update = () =>{
