@@ -7,6 +7,8 @@ const ctx = canvas.getContext('2d')
 
 const canvasItemColor = '#0095dd'
 
+let score = 0
+
 const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
@@ -41,9 +43,16 @@ const drawPaddle = () => {
     ctx.closePath()
 }
 
+const drawScore = () => {
+    ctx.font = '20px Arial'
+    ctx.fillStyle = canvasItemColor
+    ctx.fillText(`Score: ${score}`, canvas.width - 100, 30)
+}
+
 const draw = () => {
     drawBall()
     drawPaddle()
+    drawScore()
 }
 
 rulesButton.addEventListener('click', () => rules.classList.add('show'))
