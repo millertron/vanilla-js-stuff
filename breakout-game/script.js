@@ -9,6 +9,28 @@ const canvasItemColor = '#0095dd'
 
 let score = 0
 
+const brickRowCount = 9
+const brickColCount = 5
+
+const brickParam = {
+    width: 70,
+    height: 20,
+    padding: 10,
+    offsetX: 45,
+    offsetY: 60,
+    alive: true
+}
+
+const bricks = []
+for (let i = 0; i < brickRowCount; i++) {
+    bricks[i] = []
+    for (let j = 0; j < brickColCount; j++) {
+        const x = i * (brickParam.width + brickParam.padding) + brickParam.offsetX
+        const y = j * (brickParam.height + brickParam.padding) + brickParam.offsetY
+        bricks[i][j] = { x, y, ...brickParam }
+    }
+}
+
 const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
@@ -49,8 +71,21 @@ const drawScore = () => {
     ctx.fillText(`Score: ${score}`, canvas.width - 100, 30)
 }
 
+const drawBricks = () => {
+    bricks.forEach(column => {
+        column.forEach(brick => {
+            ctx.beginPath()
+            ctx.rect(brick.x, brick.y, brick.width, brick.height)
+            ctx.fillStyle = brick.alive ? canvasItemColor : 'transparent'
+            ctx.fill()
+            ctx.closePath()
+        })
+    })
+}
+
 const draw = () => {
     drawBall()
+    drawBricks()
     drawPaddle()
     drawScore()
 }
