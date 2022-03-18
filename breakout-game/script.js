@@ -111,8 +111,21 @@ const movePaddle = () => {
     }
 }
 
+const moveBall = () => {
+    ball.x += ball.dx
+    ball.y -= ball.dy
+
+    if (ball.x - ball.size < 0 || ball.x + ball.size > canvas.width) {
+        ball.dx *= -1
+    }
+    if (ball.y - ball.size < 0 || ball.y + ball.size > canvas.height) {
+        ball.dy *= -1
+    }
+}
+
 const update = () =>{
     movePaddle()
+    moveBall()
     draw()
     requestAnimationFrame(update)
 }
