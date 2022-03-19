@@ -29,7 +29,7 @@ const createList = () => {
                 <span class="number">${index + 1}</span>
                 <div class="draggable" dtaggable="true">
                     <p class="person-name">${item.value}</p>
-                    <i class="fas fa-grip-lanes"></i>
+                    <i class="fas fa-grip-lines"></i>
                 </div>
             `
             listItems.push(listItem)
