@@ -93,4 +93,19 @@ const createList = () => {
     addDragEventListeners()
 }
 
+const checkItemOrder = () => {
+    listItems.forEach((item, index) => {
+        const value = item.querySelector('.draggable').innerText.trim()
+        if (value === itemsData[index]) {
+            item.classList.add('right')
+            item.classList.remove('wrong')
+        } else {
+            item.classList.add('wrong')
+            item.classList.remove('add')
+        }
+    })
+}
+
+checkButton.addEventListener('click', checkItemOrder)
+
 createList()
