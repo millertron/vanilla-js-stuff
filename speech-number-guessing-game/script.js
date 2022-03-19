@@ -6,13 +6,10 @@ window.speechRecognition = window.speechRecognition || window.webkitSpeechRecogn
 
 let recognition = new window.speechRecognition()
 
-console.log(randomNumber)
-console.log(recognition)
-
 const checkMessageNumber = (message) => {
     const num = +message
     if (Number.isNaN(num)) {
-        msg.innerHTML = '<div>That is not a valid number...</div>'
+        msg.innerHTML += '<div>That is not a valid number...</div>'
     } else if (num >  100 || num < 1) {
         msg.innerHTML = '<div>Number must be between 1 and 100</div>'
     } else if (num > randomNum) {
@@ -22,7 +19,7 @@ const checkMessageNumber = (message) => {
     } else {
         document.body.innerHTML = `
             <h2>Congrats! You have guessed the number!<br/><br/>It was ${num}</h2>
-            <button class="play-again" id="play-again">Play Again</button>
+            <button class="reset-btn" id="resetButton">Play Again</button>
         `
     }
 }
@@ -37,5 +34,9 @@ const onSpeak = (e) => {
 }
 
 recognition.addEventListener('result', onSpeak)
-
 recognition.addEventListener('end', () => recognition.start())
+document.body.addEventListener('click', () => {
+    if (e.target.id === 'resetButton') {
+        window.location.reload()
+    }
+})
