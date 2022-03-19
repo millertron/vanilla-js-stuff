@@ -111,6 +111,12 @@ const movePaddle = () => {
     }
 }
 
+const resetBricks = () => {
+    bricks.forEach(column => {
+        column.forEach(b => b.alive = true)
+    })
+}
+
 const brickCollision = (brick) => {
     const ballLeft = ball.x - ball.size
     const ballRight = ball.x + ball.size
@@ -122,6 +128,10 @@ const brickCollision = (brick) => {
         && ballBottom > brick.y && ballTop < brick.y + brick.height) {
         ball.dy *= -1
         brick.alive = false
+        score++
+        if (bricks.length === bricks.filter(b => b.alive).length) {
+            resetBricks()
+        }
     }
 }
 
@@ -149,6 +159,11 @@ const moveBall = () => {
     bricks.forEach(column => {
         column.forEach(brickCollision)
     })
+
+    if (ballBottom > canvas.height) {
+        score = 0
+        resetBricks()
+    }
 }
 
 const update = () =>{
