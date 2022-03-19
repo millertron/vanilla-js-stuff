@@ -37,3 +37,5 @@ const onSpeak = (e) => {
 }
 
 recognition.addEventListener('result', onSpeak)
+
+recognition.addEventListener('end', () => recognition.start())
